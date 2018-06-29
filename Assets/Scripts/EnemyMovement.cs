@@ -7,20 +7,20 @@ public class EnemyMovement : MonoBehaviour
   Transform player;
   NavMeshAgent nav;
 
-  public MotherShip motherShip;
-  //private PlayerInventory inventory;
+  private MotherShip _motherShip;
+  private PlayerInventory _playerInventory;
 
   void Awake()
   {
     player = GameObject.FindGameObjectWithTag("Player").transform;
-    motherShip = GameObject.FindGameObjectWithTag("MotherShip").GetComponent<MotherShip>();
+    _motherShip = GameObject.FindGameObjectWithTag("MotherShip").GetComponent<MotherShip>();
     nav = GetComponent<NavMeshAgent>();
-    // inventory = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerInventory>();
+    _playerInventory = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerInventory>();
   }
 
   void Update()
   {
-    if (motherShip.collectedEnergy != motherShip.neededEnergy) {
+    if (_motherShip.collectedEnergy != _motherShip.neededEnergy) {
       nav.SetDestination(player.position);
     } else {
       nav.enabled = false;
@@ -30,8 +30,8 @@ public class EnemyMovement : MonoBehaviour
   void OnTriggerEnter(Collider other)
   {
     if (other.tag == "Player") {
-      // motherShip.totalEnergy -= inventory.collectedEnergy;
-      // inventory.collectedEnergy = 0;
+      _motherShip.totalEnergy -= _playerInventory.collectedEnergy;
+      _playerInventory.collectedEnergy = 0;
     }
   }
 }

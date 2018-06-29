@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(Animator))]
 public class CharacterMovement : MonoBehaviour
 {
 	public float speed = 6f;
@@ -9,13 +11,13 @@ public class CharacterMovement : MonoBehaviour
 	public float turnSmoothing = 15f;
 
 	private Vector3 movement;
-	private Animator anim;
-	private Rigidbody rb;
+	private Animator _anim;
+	private Rigidbody _rb;
 
 	void Awake()
 	{
-		anim = GetComponent<Animator>();
-		rb = GetComponent<Rigidbody>();
+		_anim = GetComponent<Animator>();
+		_rb = GetComponent<Rigidbody>();
 	}
 
 	void FixedUpdate()
@@ -31,7 +33,7 @@ public class CharacterMovement : MonoBehaviour
 	{
 		movement.Set(lh, 0f, lv);
 		movement = movement.normalized * speed * Time.deltaTime;
-		rb.MovePosition(transform.position + movement);
+		_rb.MovePosition(transform.position + movement);
 
 		if (lh != 0f || lv != 0f) {
 			Rotate(lh, lv);
@@ -42,13 +44,13 @@ public class CharacterMovement : MonoBehaviour
 	{
 		Vector3 targetDirection = new Vector3(lh, 0f, lv);
 		Quaternion targetRotation = Quaternion.LookRotation(targetDirection, Vector3.up);
-		Quaternion newRotation = Quaternion.Lerp(rb.rotation, targetRotation, turnSmoothing * Time.deltaTime);
-		rb.MoveRotation(newRotation);
+		Quaternion newRotation = Quaternion.Lerp(_rb.rotation, targetRotation, turnSmoothing * Time.deltaTime);
+		_rb.MoveRotation(newRotation);
 	}
 
 	void Animate(float lh, float lv)
 	{
 		bool isRunning = lh != 0f || lv != 0f;
-		anim.SetBool("isRunning", isRunning);
+		_anim.SetBool("isRunning", isRunning);
 	}
 }
