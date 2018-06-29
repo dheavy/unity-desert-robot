@@ -13,14 +13,16 @@ public class EnemyMovement : MonoBehaviour
   void Awake()
   {
     player = GameObject.FindGameObjectWithTag("Player").transform;
-    _motherShip = GameObject.FindGameObjectWithTag("MotherShip").GetComponent<MotherShip>();
     nav = GetComponent<NavMeshAgent>();
+
+    _motherShip = GameObject.FindGameObjectWithTag("MotherShip").GetComponent<MotherShip>();
     _playerInventory = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerInventory>();
   }
 
   void Update()
   {
     if (_motherShip.collectedEnergy != _motherShip.neededEnergy) {
+      print("xx");
       nav.SetDestination(player.position);
     } else {
       nav.enabled = false;
