@@ -22,7 +22,6 @@ public class EnemyMovement : MonoBehaviour
   void Update()
   {
     if (_motherShip.collectedEnergy != _motherShip.neededEnergy) {
-      print("xx");
       nav.SetDestination(player.position);
     } else {
       nav.enabled = false;
