@@ -6,6 +6,7 @@ TagManager:
   tags:
   - MotherShip
   - Energy
+  - HUDCanvas
   layers:
   - Default
   - TransparentFX

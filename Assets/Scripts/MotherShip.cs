@@ -19,6 +19,7 @@ public class MotherShip : MonoBehaviour
   {
     _energies = GameObject.FindGameObjectsWithTag("Energy");
     _playerInventory = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerInventory>();
+    _anim = GameObject.FindGameObjectWithTag("HUDCanvas").GetComponent<Animator>();
 
     totalEnergy = _energies.Length;
     neededEnergy = Mathf.RoundToInt(totalEnergy * difficultyPercentage);
@@ -26,14 +27,15 @@ public class MotherShip : MonoBehaviour
 
   void Update()
   {
-    // if (totalEnergy < neededEnergy || collectedEnergy == neededEnergy) {
+    if (totalEnergy < neededEnergy || collectedEnergy >= neededEnergy) {
+      print("GAME OVER!");
+      _anim.SetTrigger("IsGameOver");
+      _restartTimer += Time.deltaTime;
 
-    //   _restartTimer += Time.deltaTime;
-
-    //   if (_restartTimer >= restartDelay) {
-    //     Application.LoadLevel(Application.loadedLevel);
-    //   }
-    // }
+      if (_restartTimer >= restartDelay) {
+        Application.LoadLevel(Application.loadedLevel);
+      }
+    }
   }
 
   void OnTriggerEnter(Collider other)
